@@ -4,7 +4,7 @@ resource "azurerm_storage_account" "media" {
   resource_group_name      = azurerm_resource_group.rg.name
   location                = var.location
   account_tier             = "Standard"
-  account_replication_type = "ZRS" # Mayor disponibilidad para contenido multimedia
+  account_replication_type = "ZRS"
   account_kind             = "StorageV2"
 
   static_website {
