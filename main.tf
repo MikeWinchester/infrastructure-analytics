@@ -1,9 +1,5 @@
 provider "azurerm" {
-  features {
-    network {
-      prevent_creation_of_network_watcher = false 
-    }
-  }
+  features {}
 }
 
 resource "azurerm_resource_group" "rg" {
