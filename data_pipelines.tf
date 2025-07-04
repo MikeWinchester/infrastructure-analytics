@@ -31,6 +31,19 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "sql_linked" {
   connection_string = "Server=tcp:${azurerm_mssql_server.sql.fully_qualified_domain_name},1433;Database=${azurerm_mssql_database.transactional.name};User ID=${var.sql_admin_username};Password=${var.sql_admin_password};Trusted_Connection=False;Encrypt=True;"
 }
 
+resource "azurerm_data_factory_dataset_azure_sql_table" "sql_table" {
+  name                = "AzureSqlTable1"
+  data_factory_id     = azurerm_data_factory.adf.id
+  linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.sql_linked.name
+}
+
+resource "azurerm_data_factory_dataset_azure_blob" "blob" {
+  name                = "AzureBlob1"
+  data_factory_id     = azurerm_data_factory.adf.id
+  linked_service_name = azurerm_data_factory_linked_service_azure_blob_storage.datalake_linked.name
+  path                = "curated" # Nombre de tu contenedor
+}
+
 # Pipeline de ejemplo para cargar datos
 resource "azurerm_data_factory_pipeline" "orders_pipeline" {
   name            = "orders_processing_pipeline"

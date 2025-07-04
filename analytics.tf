@@ -7,6 +7,10 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login              = var.synapse_sql_admin_username
   sql_administrator_login_password     = var.synapse_sql_admin_password
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = var.tags
 }
 
