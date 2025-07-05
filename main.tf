@@ -16,7 +16,7 @@ resource "azurerm_storage_account" "datalake" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   account_kind             = "StorageV2"
-  is_hns_enabled           = true
+  is_hns_enabled           = true # Habilita el espacio de nombres jerárquico (Data Lake)
 
   tags = var.tags
 }
