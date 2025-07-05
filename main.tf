@@ -1,3 +1,13 @@
+# terraform {
+#   required_providers {
+#     azurerm = {
+#       source  = "hashicorp/azurerm"
+#       version = "~> 3.0"
+#     }
+#   }
+# }
+
+
 provider "azurerm" {
   features {}
   
@@ -24,8 +34,9 @@ resource "azurerm_storage_account" "datalake" {
 }
 
 # Containers para el Data Lake
-resource "azurerm_storage_data_lake_gen2_filesystem" "containers" {
-  for_each           = toset(["raw", "processed", "curated", "sandbox"])
+resource "azurerm_storage_data_lake_gen2_filesystem" "processed" {
+  for_each           = toset(["processed", "raw", "curated", "sandbox"])
   name               = each.key
+  # name               = "processed"
   storage_account_id = azurerm_storage_account.datalake.id
 }

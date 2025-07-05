@@ -32,49 +32,50 @@ resource "azurerm_data_factory_linked_service_azure_sql_database" "sql_linked" {
 }
 
 resource "azurerm_data_factory_dataset_azure_sql_table" "sql_table" {
-  name                = "AzureSqlTable1"
+  name                = "azureaqltable1"
   data_factory_id     = azurerm_data_factory.adf.id
-  linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.sql_linked.name
+  # linked_service_name = azurerm_data_factory_linked_service_azure_sql_database.sql_linked.name
+  linked_service_id = azurerm_data_factory_linked_service_azure_sql_database.sql_linked.id
 }
 
 resource "azurerm_data_factory_dataset_azure_blob" "blob" {
   name                = "AzureBlob1"
   data_factory_id     = azurerm_data_factory.adf.id
   linked_service_name = azurerm_data_factory_linked_service_azure_blob_storage.datalake_linked.name
-  path                = "curated" # Nombre de tu contenedor
+  path                = "processed" # Nombre de tu contenedor
 }
 
-# Pipeline de ejemplo para cargar datos
-resource "azurerm_data_factory_pipeline" "orders_pipeline" {
-  name            = "orders_processing_pipeline"
-  data_factory_id = azurerm_data_factory.adf.id
+# # Pipeline de ejemplo para cargar datos
+# resource "azurerm_data_factory_pipeline" "orders_pipeline" {
+#   name            = "orders_processing_pipeline"
+#   data_factory_id = azurerm_data_factory.adf.id
 
-  activities_json = <<JSON
-[
-  {
-    "name": "CopyOrdersToDatalake",
-    "type": "Copy",
-    "inputs": [
-      {
-        "referenceName": "AzureSqlTable1",
-        "type": "DatasetReference"
-      }
-    ],
-    "outputs": [
-      {
-        "referenceName": "AzureBlob1",
-        "type": "DatasetReference"
-      }
-    ],
-    "typeProperties": {
-      "source": {
-        "type": "SqlSource"
-      },
-      "sink": {
-        "type": "BlobSink"
-      }
-    }
-  }
-]
-JSON
-}
+#   activities_json = <<JSON
+# [
+#   {
+#     "name": "CopyOrdersToDatalake",
+#     "type": "Copy",
+#     "inputs": [
+#       {
+#         "referenceName": "azuresqltable1",
+#         "type": "DatasetReference"
+#       }
+#     ],
+#     "outputs": [
+#       {
+#         "referenceName": "AzureBlob1",
+#         "type": "DatasetReference"
+#       }
+#     ],
+#     "typeProperties": {
+#       "source": {
+#         "type": "SqlSource"
+#       },
+#       "sink": {
+#         "type": "BlobSink"
+#       }
+#     }
+#   }
+# ]
+# JSON
+# }

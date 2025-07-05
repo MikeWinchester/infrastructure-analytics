@@ -21,5 +21,6 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
 resource "azurerm_data_protection_backup_policy_blob_storage" "datalake_backup" {
   name               = "backup-policy-datalake"
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-  retention_duration = "P30D" # 30 días de retención
+  # retention_duration = "P30D" # 30 días de retención
+  operational_default_retention_duration = "P30D"
 }

@@ -27,12 +27,13 @@ resource "azurerm_mssql_database" "transactional" {
 
 # Redis Cache para caché
 resource "azurerm_redis_cache" "redis" {
-  name                = "redis-${var.project}-${var.environment}-${substr(md5(var.location), 0, 4)}"  resource_group_name = azurerm_resource_group.rg.name
+  name                = "redis-${var.project}-${var.environment}-${substr(md5(var.location), 0, 4)}"  
+  resource_group_name = azurerm_resource_group.rg.name
   location            = var.location
   capacity            = 1
   family              = "C"
   sku_name            = "Standard"
-  enable_non_ssl_port = false
+  # enable_non_ssl_port = false
   minimum_tls_version = "1.2"
 
   redis_configuration {
